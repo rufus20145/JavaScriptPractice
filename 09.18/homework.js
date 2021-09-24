@@ -111,4 +111,5 @@ console.log(factorial(3));
 console.log(factorial(4));
 console.log(factorial(10));
 console.log(factorial(100));
+console.log(factorial(133));
 console.log(factorial(170));
