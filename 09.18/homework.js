@@ -1,11 +1,7 @@
 function factorial(num, callBackFunction) {
-  // console.log("Мы сейчас в " + this);
-  // console.time("factorial");
-
-  // Объявляем переменную Результат
+  // Объявляем переменную Результат, Предрезультат и индекс предрезультата
   var result;
   var preResult;
-  var foundPreResult = false;
   var preResultIndex;
 
   //инициализируем кеш
@@ -25,9 +21,7 @@ function factorial(num, callBackFunction) {
   if (num == undefined) {
     //Если у объекта есть св-во value, то рассчитываем его факториал
     if (typeof this.value == "number") {
-      // console.log("Сработало");
       num = this.value;
-      // console.log("num = " + num);
     } else {
       result = undefined;
     }
@@ -52,27 +46,45 @@ function factorial(num, callBackFunction) {
 
   // проверяем на наличие в кеше
   else if (typeof factorial.resultList[num] == "number") {
-    console.error("Считано значение из кеша");
+    console.log("Есть попадание в кеш! Считали значение для " + num);
     result = factorial.resultList[num];
   } else {
-    for (var index = num; index > 0; index--) {
-      if (typeof factorial.resultList[index] == "number") {
+    for (var offset = 0; offset < num; offset++) {
+      if (typeof factorial.resultList[num + offset] == "number") {
         console.log(
-          "       Нашли в кеше значение факториала для " +
-            index +
-            ". Теперь досчитываем его до необходимого"
+          "Нашли в кеше значение факториала для большего числа: " +
+            (num + offset) +
+            ". Теперь будем делить его до необходимого."
         );
-        preResult = factorial.resultList[index];
-        preResultIndex = index;
-        foundPreResult = true;
+        preResult = factorial.resultList[num + offset];
+        preResultIndex = num + offset;
+        break;
+      }
+      if (typeof factorial.resultList[num - offset] == "number") {
+        console.log(
+          "Нашли в кеше значение факториала для меньшего числа: " +
+            (num - offset) +
+            ". Теперь будем умножать его до необходимого."
+        );
+        preResult = factorial.resultList[num - offset];
+        preResultIndex = num - offset;
         break;
       }
     }
 
-    if (foundPreResult) {
+    if (typeof preResult == "number") {
       result = preResult;
-      for (var i = preResultIndex + 1; i <= num; i++) {
-        result *= i;
+      if (preResultIndex > num) {
+        // нашли предрезультат после искомого - надо делить до искомого
+        for (var i = preResultIndex; i > num; i--) {
+          result /= i;
+        }
+      } else {
+        // нашли предрезультат перед искомым - надо домножать
+        // до искомого включительно (по определению факториала)
+        for (var i = ++preResultIndex; i <= num; i++) {
+          result *= i;
+        }
       }
     } else {
       //   инициализируем результат
@@ -80,16 +92,14 @@ function factorial(num, callBackFunction) {
 
       // Цикл: от 1 до Число включительно
       for (var i = 1; i <= num; i++) {
-        //     console.log("i = " + i);
-        //     console.log("result = " + result);
         // Результат = Результат * переменная цикла
         result *= i;
       }
     }
 
-    // помещаем данные в кеш
+    // помещаем посчитанное значение в кеш
     factorial.resultList[num] = result;
-    console.log(factorial.resultList[num] + " записано в кеш");
+    console.error(factorial.resultList[num] + " записано в кеш");
   }
 
   // если вызвано как конструктор
@@ -97,19 +107,32 @@ function factorial(num, callBackFunction) {
     this.value = num;
     this.factorial = result;
   } else {
-    // console.timeEnd("factorial");
+    //вызываем функцию обратного вызова при её наличии
     if (typeof callBackFunction == "function") {
       callBackFunction(result);
     }
     return result;
+    //   возвращаем Результат
   }
-  //   возвращаем Результат
 }
 
-console.log(factorial(2));
-console.log(factorial(3));
-console.log(factorial(4));
-console.log(factorial(10));
-console.log(factorial(100));
-console.log(factorial(133));
-console.log(factorial(170));
+console.log("Факториал 2 = " + factorial(2));
+console.log("Факториал 2 = " + factorial(2));
+console.log("Факториал 3 = " + factorial(3));
+console.log("Факториал 4 = " + factorial(4));
+console.log("Факториал 10 = " + factorial(10));
+console.log("Факториал 7 = " + factorial(7));
+console.log("Факториал 6 = " + factorial(6));
+console.log("Факториал 100 = " + factorial(100));
+console.log("Факториал 133 = " + factorial(133));
+console.log("Факториал 170 = " + factorial(170));
+
+/*
+for (var j = 0; j < 172; j++) {
+  factorial(j, console.log);
+}
+*/
+
+//проблема при делении
+factorial(33, console.log);
+factorial(17, console.log);
