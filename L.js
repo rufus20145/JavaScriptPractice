@@ -127,12 +127,37 @@ function a(val) {
   return val;
 }
 
-function b(val) {
-  document.getElementsByTagName("body")[0].innerHTML = val;
+function b(val, isClear = false) {
+  var body = document.getElementsByTagName("body")[0];
+  if (isClear) {
+    body.innerHTML = "";
+  }
+  body.innerHTML += val;
   return val;
 }
 
-function c(...val) {
-  console.log(...val);
+function c(val, ...values) {
+  console.log(val, ...values);
   return val;
 }
+
+function r(min, max) {
+  var result;
+
+  if (typeof min != "number") {
+    result = undefined;
+    cl("Первое не число");
+  } else if (typeof max != "number") {
+    result = undefined;
+    cl("Второе не число");
+  } else if (max < min) {
+    cl("Второе меньше первого");
+    result = undefined;
+  } else {
+    var tmp = max - min;
+    tmp = Math.round(tmp * Math.random());
+    result = min + tmp;
+  }
+  return result;
+}
+

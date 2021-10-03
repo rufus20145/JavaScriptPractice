@@ -1,7 +1,7 @@
 //изменить класс String так, чтобы на вход можно было подать массив строк,
 //и при вызове valueOf получать случайную строку из массива
 
-function Str(...array) {
+function MagicString(...array) {
   this.array = array;
   this.numberOfStrings = array.length;
 }
@@ -21,11 +21,11 @@ var _str = {
   },
 };
 
-Str.prototype = _str;
-_str.constructor = Str;
-Str.prototype.__proto__ = String;
+MagicString.prototype = _str;
+_str.constructor = MagicString;
+MagicString.prototype.__proto__ = String;
 
-var s = new Str(
+var s = new MagicString(
   "Hello",
   "World",
   "AAAA",
