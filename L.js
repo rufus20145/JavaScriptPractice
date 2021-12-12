@@ -55,8 +55,8 @@ function factorial(num, callBackFunction) {
         if (typeof factorial.resultList[num + offset] == "bigint") {
           console.log(
             "Нашли в кеше значение факториала для большего числа: " +
-              (num + offset) +
-              ". Теперь будем делить его до необходимого."
+            (num + offset) +
+            ". Теперь будем делить его до необходимого."
           );
           preResult = factorial.resultList[num + offset];
           preResultIndex = num + offset;
@@ -65,8 +65,8 @@ function factorial(num, callBackFunction) {
         if (typeof factorial.resultList[num - offset] == "bigint") {
           console.log(
             "Нашли в кеше значение факториала для меньшего числа: " +
-              (num - offset) +
-              ". Теперь будем умножать его до необходимого."
+            (num - offset) +
+            ". Теперь будем умножать его до необходимого."
           );
           preResult = factorial.resultList[num - offset];
           preResultIndex = num - offset;
@@ -160,4 +160,3 @@ function r(min, max) {
   }
   return result;
 }
-
