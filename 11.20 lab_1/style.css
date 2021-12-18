@@ -1,0 +1,9 @@
+body {
+    background-image: url("store.jpg");
+    text-align: center
+}
+
+.gameField {
+    background-color: palegreen;
+    border: 2px solid black;
+}

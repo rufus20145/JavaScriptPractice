@@ -11,10 +11,10 @@ class Storekeeper {
 
   moveDown() {
     var tmp;
-    if ((tmp = this.store.getCellContent(this.x, this.y - 1)) == 0) {
+    if ((tmp = this.store.getCellContent(this.x, this.y - 1)) == ' ') {
       this.y--;
       c("Moved down. Now coordinates are " + this.x + " and " + this.y);
-    } else if (tmp == 3 && this.store.getCellContent(this.x, this.y - 2) == 0) {
+    } else if (tmp == ' *' && this.store.getCellContent(this.x, this.y - 2) == ' ') {
       c("Container in front! Move it!");
       this.store.getContainer(this.x, this.y - 1).moveDown();
       this.y--;
@@ -25,10 +25,10 @@ class Storekeeper {
 
   moveUp() {
     var tmp;
-    if ((tmp = this.store.getCellContent(this.x, this.y + 1)) == 0) {
+    if ((tmp = this.store.getCellContent(this.x, this.y + 1)) == ' ') {
       this.y++;
       c("Moved up. Now coordinates are " + this.x + " and " + this.y);
-    } else if (tmp == 3 && this.store.getCellContent(this.x, this.y + 2) == 0) {
+    } else if (tmp == ' *' && this.store.getCellContent(this.x, this.y + 2) == ' ') {
       c("Container in front! Move it!");
       this.store.getContainer(this.x, this.y + 1).moveUp();
       this.y++;
@@ -39,10 +39,10 @@ class Storekeeper {
 
   moveLeft(matrix) {
     var tmp;
-    if ((tmp = this.store.getCellContent(this.x - 1, this.y)) == 0) {
+    if ((tmp = this.store.getCellContent(this.x - 1, this.y)) == ' ') {
       this.x--;
       c("Moved left. Now coordinates are " + this.x + " and " + this.y);
-    } else if (tmp == 3 && this.store.getCellContent(this.x - 2, this.y) == 0) {
+    } else if (tmp == ' *' && this.store.getCellContent(this.x - 2, this.y) == ' ') {
       c("Container in front! Move it!");
       this.store.getContainer(this.x - 1, this.y).moveLeft();
       this.x--;
@@ -53,10 +53,10 @@ class Storekeeper {
 
   moveRight(matrix) {
     var tmp;
-    if ((tmp = this.store.getCellContent(this.x + 1, this.y)) == 0) {
+    if ((tmp = this.store.getCellContent(this.x + 1, this.y)) == ' ') {
       this.x++;
       c("Moved right. Now coordinates are " + this.x + " and " + this.y);
-    } else if (tmp == 3 && this.store.getCellContent(this.x + 2, this.y) == 0) {
+    } else if (tmp == ' *' && this.store.getCellContent(this.x + 2, this.y) == ' ') {
       c("Container in front! Move it!");
       this.store.getContainer(this.x + 1, this.y).moveLeft();
       this.y++;
