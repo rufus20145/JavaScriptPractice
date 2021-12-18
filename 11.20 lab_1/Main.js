@@ -1,93 +1,74 @@
-(function () {
-  const horizontalCells = 6,
-    verticalCells = 8,
+const horizontalCells = 22,
+    verticalCells = 11,
     cellWidth = 40,
-    elemID = "sokobanGame";
+    gameFieldId = 'gameField',
+    mainDivId = 'sokobanGame',
+    wallColor = 'black',
+    storekeeperColor = 'blue',
+    containerColor = 'red',
+    placeColor = 'yellow';
 
-  var store = new Store(horizontalCells, verticalCells, 2);
-  var storekeeper = new Storekeeper(1, 1, store);
-  c(storekeeper);
-  c(store);
+var store = new Store(horizontalCells, verticalCells, 2);
+store.loadMap();
+var storekeeper = new Storekeeper(12, 8, store);
+c(storekeeper);
+c(store);
 
-  var fieldWidth = horizontalCells * cellWidth,
-    fieldHeight = verticalCells * cellWidth;
-  document.getElementById(elemID).innerHTML = `
-    <canvas style='width:${fieldWidth}px; height:${fieldHeight}px' id='cnvs' width='${fieldWidth}' height='${fieldHeight}'></canvas>
-    <p>
-      <button id='up'>Вверх</button>
-    </p>
-    <p>
-      <button id='left'>Влево</button>
-      <button id='right'>Вправо</button>
-    </p>
-    <p>
-      <button id='down'>Вниз</button>
-    </p>
+function load() {
+    var fieldWidth = horizontalCells * cellWidth,
+        fieldHeight = verticalCells * cellWidth;
 
-    `;
-  canvas = document.getElementById("cnvs");
-  context = canvas.getContext("2d");
-  for (var y = 0; y <= verticalCells; y++) {
-    context.beginPath();
-    context.moveTo(0, y * cellWidth);
-    context.lineTo(fieldWidth, y * cellWidth);
-    context.stroke();
-    context.strokeStyle = "black";
-    context.fill();
-  }
-  for (var x = 0; x <= horizontalCells; x++) {
-    context.beginPath();
-    context.moveTo(x * cellWidth, 0);
-    context.lineTo(x * cellWidth, fieldHeight);
-    context.stroke();
-    context.strokeStyle = "black";
-    context.fill();
-  }
+    document.getElementById(mainDivId).innerHTML = `
+        <canvas id="${gameFieldId}" class="gameField"></canvas>
+        <p>
+            <button id='up' onclick = storekeeper.moveUp()>Вверх</button>
+        </p>
+        <p>
+            <button id='left'>Влево</button>
+            <button id='right'>Вправо</button>
+        </p>
+        <p>
+            <button id='down'>Вниз</button>
+        </p>`;
 
-  //обработчики нажатий кнопок
-  document.getElementById("left").onclick = function () {
-    storekeeper.moveLeft();
-  };
+    document.getElementById(gameFieldId).width = fieldWidth;
+    document.getElementById(gameFieldId).height = fieldHeight;
 
-  document.getElementById("right").onclick = function () {
-    storekeeper.moveRight();
-  };
-  document.getElementById("down").onclick = function () {
-    storekeeper.moveDown();
-  };
 
-  document.getElementById("up").onclick = function () {
-    storekeeper.moveUp();
-  };
+    canvas = document.getElementById(gameFieldId);
+    context = canvas.getContext("2d");
+    for (var y = 0; y <= verticalCells; y++) {
+        context.beginPath();
+        context.moveTo(0, y * cellWidth);
+        context.lineTo(fieldWidth, y * cellWidth);
+        context.stroke();
+        context.strokeStyle = "black";
+        context.fill();
+    }
+    for (var x = 0; x <= horizontalCells; x++) {
+        context.beginPath();
+        context.moveTo(x * cellWidth, 0);
+        context.lineTo(x * cellWidth, fieldHeight);
+        context.stroke();
+        context.strokeStyle = "black";
+        context.fill();
+    }
 
-  store.drawMap();
+    // document.getElementById("left").onclick = function () {
+    //     storekeeper.moveLeft();
+    // };
 
-  //ОТРИСОВКА ИГРОВОГО ПОЛЯ
-  function initGameField(width, height, cellWidth, cellColor) {
-    canvas, context;
+    document.getElementById("right").onclick = function () {
+        storekeeper.moveRight();
+    };
+    document.getElementById("down").onclick = function () {
+        storekeeper.moveDown();
+    };
 
-    console.log(matrix);
+    document.getElementById("up").onclick = function () {
+        storekeeper.moveUp();
+    };
+}
 
-    // context.beginPath();
-    // context.moveTo(fieldWidth / 2, 0);
-    // context.lineTo(fieldWidth / 2, fieldHeight);
-    // context.stroke();
-    // context.strokeStyle = "black";
-    // context.fill();
 
-    // context.beginPath();
-    // context.moveTo(0, fieldHeight / 2);
-    // context.lineTo(fieldWidth, fieldHeight / 2);
-    // context.stroke();
-    // context.strokeStyle = "black";
-    // context.fill();
-
-    return canvas;
-  }
-
-  //ВЫВОД В КОНСОЛЬ
-  function c(val, ...valList) {
-    console.log(val, ...valList);
-    return val;
-  }
-})();
+store.drawMap();

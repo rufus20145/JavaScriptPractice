@@ -1,54 +1,56 @@
+const defaultMap = Array("    XXXXX             ",
+    "    X   X             ",
+    "    X*  X             ",
+    "  XXX  *XXX           ",
+    "  X  *  * X           ",
+    "XXX X XXX X     XXXXXX",
+    "X   X XXX XXXXXXX  ..X",
+    "X *  *             ..X",
+    "XXXXX XXXX X@XXXX  ..X",
+    "    X      XXX  XXXXXX",
+    "    XXXXXXXX          "),
+    defaultMapHeight = 11,
+    defaultMapWidth = 22;
+
+
+
 class Store {
-  #map;
-  #containers;
-  constructor(width, height, numOfContainers) {
-    this.width = width;
-    this.height = height;
-    this.numOfContainers = numOfContainers;
-    this.#map = this.#initMapWithBorders(width, height);
-    if (numOfContainers > 0) {
-      this.addContainers();
-    }
-  }
+    #map;
 
-  #initMapWithBorders(width, height) {
-    var array = new Array(height)
-      .fill(undefined)
-      .map(() => new Array(width).fill(0));
-    array[0].fill(1);
-    array[height - 1].fill(1);
-
-    for (var i = 1; i < height - 1; i++) {
-      array[i][0] = 1;
-      array[i][width - 1] = 1;
+    constructor(width, height, numOfContainers) {
+        this.width = width;
+        this.height = height;
+        this.numOfContainers = numOfContainers;
     }
 
-    return array;
+    loadMap(rawMap = defaultMap, height = defaultMapHeight, width = defaultMapWidth) {
 
-    // ! генерация пустого поля
-    // return new Array(height)
-    //   .fill(undefined)
-    //   .map(() => new Array(width).fill(0));
-  }
+        var array = new Array(height);
 
-  addContainers() {
-    this.#map[1][2] = 3;
-    this.#map[3][4] = 3;
-  }
+        for (var i = 0; i < height; i++) {
+            array[i] = new Array(width);
+            for (var j = 0; j < width; j++) {
+                array[i][j] = rawMap[i][j];
+                c(rawMap[i][j]);
+            }
 
-  getCellContent(x, y) {
-    return this.#map[x][y];
-  }
-
-  getContainer(x, y) {
-    if (this.getCellContent(x, y) == 3) return this.#map[x][y];
-    else {
-      c("There is no container");
-      return undefined;
+        }
+        this.#map = array;
     }
-  }
 
-  drawMap() {
-    return undefined;
-  }
+    getCellContent(x, y) {
+        return this.#map[y][x];
+    }
+
+    getContainer(x, y) {
+        if (this.getCellContent(x, y) == 3) return this.#map[x][y];
+        else {
+            c("There is no container");
+            return undefined;
+        }
+    }
+
+    drawMap(x,y, ) {
+        return undefined;
+    }
 }
